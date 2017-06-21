@@ -1,0 +1,51 @@
+<apex:page sidebar="false" standardController="Account" recordSetVar="accounts" extensions="SearchRecordsAccount" id="accountSearchPage">
+    <apex:image value="{!$Resource.PageImage}" width="100%" height="20%"/>
+    <apex:pageblock title="ViewAccounts" id="pageBlock">
+        <apex:pageMessages id="pageMsg"/>
+        <apex:form id="form">
+            <apex:inputText value="{! getstring}" id="inputText" onkeypress="return noenter(event)" />
+            <apex:commandButton value="Search" action="{! searchAccounts}" id="searchButton" reRender="pageMsg,AccountListSection,count"/><br/>
+            <apex:commandLink value="Clear" action="{! displayAllRecords}" id="clearLink" reRender="inputText,pageMsg,AccountListSection,count"/>
+            <apex:outputPanel >
+            <p align="right">
+                <apex:repeat value="{! alphabets}" var="alphabetToDisplay">
+                    <apex:outputLink onclick="searchAlphabetMethod('{! alphabetToDisplay}'); return false;">| {! alphabetToDisplay} </apex:outputLink>
+                </apex:repeat>
+                <apex:actionFunction name="searchAlphabetMethod" action="{!searchByAlphabet}" reRender="pageMsg,AccountListSection,count">
+                    <apex:param name="searchParam" assignTo="{!alphabet}" value=""/>
+                </apex:actionFunction>
+            </p>
+            </apex:outputPanel>
+            <apex:pageBlock id="AccountListSection">
+                <apex:outputPanel >
+                    <p align="right" id="count"><I>Total results found {!Length}</I></p>
+                </apex:outputPanel>
+                <apex:pageBlockTable value="{! accounts}" var="a">
+                    <apex:column headervalue="Account Name">
+                        <apex:outputLink value="/{!A.id}" id="detail">{!a.name}</apex:outputLink>
+                    </apex:column>
+                    <apex:column value="{! a.Email__c}"/>
+                    <apex:column value="{! a.Phone}"/>
+                    <apex:column headervalue="Website">
+                        <apex:outputLink target="_blank" value="http://{!a.Website}">{!a.Website}</apex:outputLink>
+                    </apex:column>
+                    <apex:column >
+                        <apex:commandLink value="Delete" onclick="deleteAcc('{!a.id}');return false;" reRender="AccountListSection"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </apex:pageBlock>
+        </apex:form>
+    </apex:pageblock>
+    <script type = 'text/javascript'>
+	    function noenter(ev)  {
+	            if (window.event && window.event.keyCode == 13 || ev.which == 13) {
+	                var search=document.getElementById("{! $Component.pageBlock.form.searchButton}");
+	                search.click();
+	                return false;
+	             } else {
+	                  return true;  
+	             }
+	        }
+    </script>
+    <apex:includeScript value="{! URLFOR($Resource.Script, 'Script/Js.js')}"/>
+</apex:page>
