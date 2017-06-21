@@ -1,0 +1,73 @@
+<apex:page standardController="Invoice_Containers__c" extensions="ABC_ContainerExension" renderAs="PDF" id="ABC_COntainerPage">
+    <apex:stylesheet value="{!URLFOR($Resource.InvoiceContainerCSS)}"/>
+    <apex:form styleclass="borderClass">
+        <apex:pageBlock >
+            <table>
+                <tr>
+                    <td>
+                        <apex:outputLabel value="{!$Label.Comapny_Name}"/><br/>
+                        <apex:outputLabel value="{!$Label.Street}"/><br/>
+                        <apex:outputLabel value="{!$Label.City}"/><br/>
+                        <apex:outputLabel value="{!$Label.Phone}"/>
+                    </td>
+                    <td class="columnSpacing">
+                        <h3 class="invoiceLabel"><apex:outputLabel value="{!$Label.Invoice}"/></h3>
+                        <apex:dataTable value="{!Invoice_Containers__c}" var="container" id="theTable" headerClass="tableheadcolor" columnsWidth="100px, 100px">
+                            <apex:column styleclass="tablehead">
+                                <apex:facet name="header" >{!$Label.Invoice} #</apex:facet>
+                                <apex:outputText value="{!container.Name}"/>
+                            </apex:column>
+                            <apex:column styleclass="tablehead">
+                                <apex:facet name="header">{!$Label.Date}</apex:facet>
+                                <apex:outputText value="{!container.Date__c}"/>
+                            </apex:column>
+                        </apex:dataTable>
+                    </td>
+                </tr>
+            </table>
+            <br/><br/><br/>
+            <table>
+                <tr>
+                    <td>
+                        <apex:dataTable value="{!Invoice_Containers__c}" var="container" headerClass="tableheadcolor">
+                            <apex:column styleclass="billToHead">
+                                <h1><apex:facet name="header">{!$Label.Bill_To}</apex:facet></h1>
+                                <apex:outputText value="{!container.Name_of_Contact__c}"/><br/>
+                                <apex:outputText value="{!container.Company_Name__c}"/><br/>
+                                <apex:outputText value="{!container.Street__c}"/><br/>
+                                <apex:outputText value="{!container.City__c}"/>
+                                <apex:outputText value="{!container.State__c  }"/>
+                                <apex:outputText value="{!container.ZIP__c}"/><br/>
+                                <apex:outputText value="{!container.Phone__c}"/><br/>
+                                <apex:outputText value="{!container.Email__c}"/>
+                            </apex:column>
+                        </apex:dataTable>
+                    </td>
+                </tr>
+            </table>
+            <br/><br/><br/>
+            <table>
+                <tr>
+                    <td>
+                        <apex:dataTable value="{!expenseLabelList}" var="expense" headerClass="tableheadcolor3" columnsWidth="90%,90%">
+                            <apex:column style="cellspacing:30px;" styleclass="tablehead">
+                                <apex:facet name="header">{!$Label.Description}</apex:facet>
+                                <apex:outputText value="{!expense}"/>
+                            </apex:column>
+                            <apex:column styleclass="tablehead">
+                                <apex:facet name="header">Amount</apex:facet>
+                                <apex:outputText value="{!mapExpenses[expense]}"/>
+                            </apex:column>
+                        </apex:dataTable>
+                    </td>
+                </tr>
+            </table>
+        </apex:pageBlock>
+        <apex:pageBlock >
+            <p align = "center">
+                <apex:outputLabel styleclass="footer" value="{!$Label.Footer}"/><br/>
+                <apex:outputLabel styleclass="footer" value="{!$Label.Footer2}"/>
+            </p>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
