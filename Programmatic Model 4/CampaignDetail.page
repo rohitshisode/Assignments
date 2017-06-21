@@ -1,0 +1,41 @@
+<apex:page standardController="Campaign">
+<apex:form >
+    <apex:pageBlock title="Campaign Detail">
+    <table style="width: 100%"><tr>
+    <td>
+        Campaign Detail
+    </td>
+    <td align="center">
+        <apex:commandLink style="Float:right;" action="{!URLFOR($Action.Campaign.Clone, Campaign.id)}" value="|Copy" />&nbsp;
+        <apex:commandLink style="Float:right;" action="{!URLFOR($Action.Campaign.Delete, Campaign.id)}" value="Delete" onclick="return confirmDelete()" />&nbsp;
+        <apex:commandLink style="Float:right;" action="{!URLFOR($Action.Campaign.Edit, Campaign.id)}" value="Edit|" />
+    </td>
+    <td align="right">
+        
+    </td>
+    </tr></table>
+        <apex:pageBlockSection >
+        <apex:outputField value="{! Campaign.ownerid}"/>
+        <apex:outputField value="{! Campaign.ExpectedRevenue}"/>
+        <apex:outputField value="{! Campaign.Name}"/>
+        <apex:outputField value="{! Campaign.Type}"/>
+        <apex:outputField value="{! Campaign.StartDate}"/>
+        <apex:outputField value="{! Campaign.BudgetedCost}"/>
+        <apex:outputField value="{! Campaign.EndDate}"/>
+        <apex:outputField value="{! Campaign.parentid}"/>
+        <apex:outputField value="{! Campaign.CreatedByid}"/>
+        <apex:outputField value="{! Campaign.Status}"/>
+        <apex:outputField value="{! Campaign.LastModifiedByid}"/><br/>
+        <apex:outputField value="{! Campaign.Description}"/>
+        </apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+<script type='text/javascript'>
+    function deleteConfirm(){
+        var r=confirm('Do you want to delete?');
+        if(r == true){
+            window.location.href='/apex/SampleCampaignListPage'
+        }
+    }
+</script>
+</apex:page>

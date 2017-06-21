@@ -1,0 +1,35 @@
+<apex:page controller="CampaignViewController">
+    <apex:form >
+
+        <apex:pageBlock title="User Driven Campaign" id="campaigns_list">
+            Filter: 
+            <apex:selectList value="{! campaignFilterId }" size="1">
+                <apex:selectOptions value="{! CampaignExistingViews }"/>
+                <apex:actionSupport event="onchange" action="{! resetFilter}" reRender="campaigns_list"/>
+            </apex:selectList>
+            <apex:commandLink style="Float:right;" action="{!URLFOR($Action.Campaign.New)}" value="New" />
+            <!-- Campaigns List -->  
+            <apex:pageBlockTable value="{! campaigns }" var="ct">
+                <apex:column >
+                    <apex:commandLink action="{! $Page.CampaignDetail}?id={! ct.id}" value="{!ct.Name}"/>
+                </apex:column>
+                <apex:column value="{! ct.Status}"/>
+                <apex:column value="{! ct.StartDate}"/>
+                <apex:column value="{! ct.LastModifiedDate}"/>
+            </apex:pageBlockTable>
+            <!-- Pagination -->
+            <table style="width: 100%"><tr>
+                <td align="center">
+                    <apex:commandLink action="{! prev }" value="« Previous"/>
+                    &nbsp;&nbsp;  
+                    <apex:commandLink action="{! Next }" value="Next »"/>
+                </td>
+            </tr></table>
+            <apex:commandLink style="Float:right;" action="{!URLFOR($Action.Campaign.New)}" value="Email Delegation" />
+            <apex:commandLink style="Float:right;" action="{!URLFOR($Action.Campaign.New)}" value="Templates|" />
+            <apex:commandLink style="Float:right;" action="/00O/o" value="Reports|" />
+            <apex:commandLink style="Float:right;" action="/setup/forcecomHomepage.apexp?setupid=ForceCom&retURL=%2F0057F000000UeBb%3Fnoredirect%3D1%26isUserEntityOverride%3D1" value="SetUp|" />
+        </apex:pageBlock>
+
+    </apex:form>
+</apex:page>
