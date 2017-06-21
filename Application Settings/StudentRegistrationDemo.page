@@ -1,0 +1,27 @@
+<apex:page StandardController="Student__c" extensions="StudentExtension" language="{!languageCode}" >
+<apex:pageMessages id="abc"></apex:pageMessages>
+<apex:form >
+   <apex:selectList label="Language" value="{!selectedLang}" size="1" multiselect="false">
+           <apex:selectOptions value="{!langList}"/>
+           <apex:actionSupport event="onchange" action="{!selectChange}" rerender="abc, student"/>
+   </apex:selectList>
+</apex:form>
+<apex:form >
+   <apex:pageBlock title="Student Details" id="student">
+       <apex:pageBlockButtons >
+            <apex:commandButton action="{!saveNew}" value="Submit" rerender="abc, student"/>
+       </apex:pageBlockButtons>
+       <apex:pageBlockSection >
+               <apex:inputField value="{!Student__c.Student_Name__c}"/>
+               <apex:inputField value="{!Student__c.Gender__c}"/>
+               <apex:inputField value="{!Student__c.SSC__c}"/>
+               <apex:inputField value="{!Student__c.HSC__c}"/>
+               <apex:inputField value="{!Student__c.Course_Applying_for__c}"/>
+               <apex:inputField value="{!Student__c.City__c}"/>
+               <apex:inputField value="{!Student__c.State__c}"/>
+               <apex:inputField value="{!Student__c.Country__c}"/>
+       </apex:pageBlockSection>
+   </apex:pageBlock>
+   
+</apex:form>
+</apex:page>
